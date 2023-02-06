@@ -24,17 +24,10 @@ jobs:
           key: node-${{ hashFiles('./package-lock.json') }}
 
       - name: "Install Composer Dependency"
-        uses: "php-actions/composer@v6"
-        with:
-          php_version: "8.x"
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader"
 
       - name: "Install NPM Dependency"
-        uses: "actions/setup-node@v3"
-        with:
-          node-version: "16.x"
-
-      - name: "Install NPM Dependency"
-        run: "npm install"
+        run: npm install
 
       - name: "Generate .env file"
         run: |
@@ -63,9 +56,8 @@ jobs:
           key: node-${{ hashFiles('./package-lock.json') }}
 
       - name: "Install Composer Dependency"
-        uses: "php-actions/composer@v6"
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader"
 
-      - uses: action/nodejs-setup@v3
       - name: "Install NPM Dependency"
         run: |
           npm install
