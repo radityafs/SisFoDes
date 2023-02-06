@@ -12,6 +12,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 ## install composer dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+## Copy folder from /public/images to /public/build/images
+RUN mkdir -p public/build/images
+RUN cp -r public/images public/build/images
+
 # Change Storage Permission
 RUN chmod -R 777 /app/storage
 
