@@ -23,11 +23,15 @@ jobs:
           path: ./node_modules
           key: node-${{ hashFiles('./package-lock.json') }}
 
-      - name: "Install Composer Dependency"
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader"
-
       - name: "Install NPM Dependency"
-        run: npm install
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "16.x"
+
+      - name: "Install Composer Dependency"
+        uses: "php-actions/composer@v6"
+        with:
+          php_version: "8.1"
 
       - name: "Generate .env file"
         run: |
@@ -55,13 +59,21 @@ jobs:
           path: ./node_modules
           key: node-${{ hashFiles('./package-lock.json') }}
 
-      - name: "Install Composer Dependency"
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader"
+      - name: "Install NPM Dependency"
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "16.x"
 
       - name: "Install NPM Dependency"
-        run: |
-          npm install
-          npm run build
+        uses: "actions/setup-node@v3"
+        with:
+          node-version: "16.x"
+
+      - name: "Install NPM Dependency"
+        run: npm install
+
+      - name: "Build Project"
+        run: npm run build
 
       - name: Stop Docker Containers
         run: docker-compose down -v --rmi local
