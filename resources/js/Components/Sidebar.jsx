@@ -1,18 +1,22 @@
 import { Link } from "@inertiajs/inertia-react";
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function Sidebar(props) {
+    const isActive = (route) => {
+        return window.location.pathname === route ? "active-page" : "";
+    };
+
     return (
         <div className="app-sidebar">
-            <div class="logo hidden-sidebar-logo">
+            <div className="logo hidden-sidebar-logo">
                 <Link className="logo-icon" href={"/dashboard"}></Link>
-                <div class="sidebar-user-switcher user-activity-online"></div>
+                <div className="sidebar-user-switcher user-activity-online"></div>
                 <span className="logo-text">Desa Mlale</span>
             </div>
 
             <div className="app-menu">
                 <ul className="accordion-menu">
-                    <li className="active-page">
+                    <li className={isActive("/dashboard")}>
                         <Link href={"/dashboard"}>
                             <i className="material-icons-two-tone">dashboard</i>
                             Dashboard
@@ -21,52 +25,52 @@ export default function Sidebar(props) {
 
                     <li className="sidebar-title">Layanan Pengguna</li>
 
-                    <li>
+                    <li className={isActive("/data-pengguna")}>
                         <Link href={"/data-pengguna"}>
                             <i className="material-icons-two-tone">group</i>
                             Data Pengguna
                         </Link>
                     </li>
-                    <li>
-                        <a href="file-manager.html">
+                    <li className={isActive("/atur-jadwal")}>
+                        <Link href={"/atur-jadwal"}>
                             <i className="material-icons-two-tone">event</i>
                             Atur Jadwal
-                        </a>
+                        </Link>
                     </li>
-                    <li>
-                        <a href="calendar.html">
+                    <li className={isActive("/voting")}>
+                        <Link href={"/voting"}>
                             <i className="material-icons-two-tone">
                                 how_to_vote
                             </i>
                             Voting
-                        </a>
+                        </Link>
                     </li>
 
                     <li className="sidebar-title">Sistem Informasi</li>
-                    <li>
-                        <a href="calendar.html">
+                    <li className={isActive("/berita")}>
+                        <Link href={"/berita"}>
                             <i className="material-icons-two-tone">feed</i>
                             Berita
-                        </a>
+                        </Link>
                     </li>
-                    <li>
-                        <a href="calendar.html">
+                    <li className={isActive("/aduan")}>
+                        <Link href={"/aduan"}>
                             <i className="material-icons-two-tone">report</i>
                             Aduan
-                        </a>
+                        </Link>
                     </li>
                     <li className="sidebar-title">Keuangan</li>
-                    <li>
-                        <a href="calendar.html">
+                    <li className={isActive("/pendataan")}>
+                        <Link href={"/pendataan"}>
                             <i className="material-icons-two-tone">menu_book</i>
                             Pendataan
-                        </a>
+                        </Link>
                     </li>
-                    <li>
-                        <a href="calendar.html">
+                    <li className={isActive("/laporan")}>
+                        <Link href={"/laporan"}>
                             <i className="material-icons-two-tone">summarize</i>
                             Laporan
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import SwitchTheme from "./SwitchTheme";
 
 export default function Header(props) {
     const { setSidebar } = props;
@@ -21,6 +22,9 @@ export default function Header(props) {
                     </div>
                     <div className="d-flex">
                         <ul className="navbar-nav">
+                            <li className="nav-item">
+                                <SwitchTheme />
+                            </li>
                             <li className="nav-item hidden-on-mobile">
                                 <a
                                     className="nav-link nav-notifications-toggle"

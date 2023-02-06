@@ -951,7 +951,7 @@ h6 {
     opacity: 1;
     font-size: 24px;
     font-weight: bold;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .app-sidebar .logo .logo-icon:hover + .sidebar-user-switcher {
@@ -1342,6 +1342,12 @@ h6 {
 }
 
 /* Hover Menu */
+
+@media (max-width: 600px) {
+    .logo-text {
+        display: none;
+    }
+}
 
 @media (min-width: 1200px) {
     .menu-hover .app-sidebar {
@@ -7504,7 +7510,7 @@ span.flatpickr-weekday {
     visibility: visible;
 }
 
-.hide-sidebar-toggle-button:hover{
+.hide-sidebar-toggle-button:hover {
     cursor: pointer;
 }
 

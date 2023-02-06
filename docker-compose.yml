@@ -1,0 +1,67 @@
+version: "3.7"
+
+services:
+    db:
+        container_name: db
+        image: mysql:5.7
+        restart: unless-stopped
+        tty: true
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: production
+            MYSQL_USER: production
+            MYSQL_PASSWORD: production123
+        volumes:
+            - /root/db_mlale/:/var/lib/mysql
+        networks:
+            - app-network
+
+    phpmyadmin:
+        container_name: phpmyadmin
+        image: phpmyadmin/phpmyadmin
+        restart: unless-stopped
+        environment:
+            PMA_HOST: db
+            PMA_PORT: 3306
+            PMA_USER: production
+            PMA_PASSWORD: production123
+        networks:
+            - app-network
+        depends_on:
+            - db
+
+    backend:
+        container_name: backend
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - backend:/app
+        networks:
+            - app-network
+
+    webserver:
+        container_name: webserver
+        image: webdevops/php-apache:8.2-alpine
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "80:80"
+        volumes:
+            - backend:/app
+            - ./Docker/.env:/app/.env
+            - ./Docker/apache/default.conf:/opt/docker/etc/httpd/conf.d/default.conf
+        depends_on:
+            - db
+            - backend
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    backend:

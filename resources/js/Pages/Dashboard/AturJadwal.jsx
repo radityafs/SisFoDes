@@ -3,13 +3,18 @@ import useSwr from "swr";
 import useSWRMutation from "swr/mutation";
 import { ToastContainer, toast } from "react-toastify";
 
+import { getUsers, putUserStatus } from "../../Utils/Fetcher/Users";
+import FormJadwal from "../../Components/Modal/FormJadwal";
 import Header from "../../Components/Header";
 import Sidebar from "../../Components/Sidebar";
 import Table from "../../Components/Table";
+import Modal from "../../Components/Modal";
 import TableColumn from "../../Consts/Table";
-import { getUsers, putUserStatus } from "../../Utils/Fetcher/Users";
+import useModal from "../../Hooks/useModal";
 
-export default function DataPengguna({ csrf_token }) {
+export default function AturJadwal({ csrf_token }) {
+    const [openModal, closeModal, modal] = useModal();
+
     const [sidebarOpen, setSidebarOpen] = React.useState(true);
     const [pagination, setPagination] = useState({
         pageIndex: 0,
@@ -23,20 +28,14 @@ export default function DataPengguna({ csrf_token }) {
         data: userData,
         isLoading: userDataLoading,
         mutate: userDataMutate,
-    } = useSwr(
-        [
-            "/api/user/?=",
-            globalFilter,
-            pagination.pageIndex * pagination.pageSize,
-        ],
-        () =>
-            getUsers({ query: globalFilter || "", page: pagination.pageIndex })
+    } = useSwr("/api/users", () =>
+        getUsers({ query: globalFilter || "", page: pagination.pageIndex })
     );
 
     const ActionTable = ({ row }) => {
         const { isActive, id } = row.original;
 
-        const { trigger } = useSWRMutation(
+        const { trigger, data } = useSWRMutation(
             `user/${id}`,
             () =>
                 putUserStatus(
@@ -92,6 +91,9 @@ export default function DataPengguna({ csrf_token }) {
             }`}
         >
             <ToastContainer />
+            <Modal title="Tambah Jadwal" size="modal-md" trigger={modal}>
+                <FormJadwal users={userData || []} />
+            </Modal>
 
             <Sidebar setShow={sidebarOpen} />
 
@@ -103,7 +105,15 @@ export default function DataPengguna({ csrf_token }) {
                             <div className="row">
                                 <div className="col">
                                     <div className="page-description">
-                                        <h1>Data Pengguna</h1>
+                                        <h1>Atur Jadwal</h1>
+                                        <div className="d-flex justify-content-end">
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={openModal}
+                                            >
+                                                Tambah Jadwal
+                                            </button>
+                                        </div>
                                     </div>
                                     <Table
                                         columns={TableColumn.users}

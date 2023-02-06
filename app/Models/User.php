@@ -42,4 +42,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getUserVoting()
+    {
+        return $this->hasMany(UserVoting::class, 'id_user');
+    }
+
+    public function getUserJadwal()
+    {
+        return $this->hasMany(UserJadwal::class, 'id_user');
+    }
+
+    public function getUserAduan()
+    {
+        return $this->hasMany(Aduan::class, 'id_user');
+    }
 }

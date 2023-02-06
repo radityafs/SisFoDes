@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\User\User as UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return inertia('Welcome');
+    return view('welcome');
 });
 
 
@@ -29,5 +31,18 @@ Route::get('/dashboard', function () {
 });
 
 Route::get('/data-pengguna', function () {
-    return inertia('Dashboard/DataPengguna');
+    $userByStatus = User::get()->groupBy('isActive');
+
+    return inertia('Dashboard/DataPengguna', [
+        'userByStatus' => $userByStatus
+    ]);
 });
+
+Route::get('/atur-jadwal', function () {
+    return inertia('Dashboard/AturJadwal');
+});
+
+
+Route::get("/users", [UserController::class, "getData"])->middleware("auth");
+Route::put("/user/{id}", [UserController::class, "putUserStatus"])->middleware("auth");
+Route::get("/user/{id}", [UserController::class, "getUserDetail"])->middleware("auth");
