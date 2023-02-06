@@ -33,10 +33,12 @@ jobs:
         with:
           php-version: "8.1"
           tools: composer:v2
-          args: -s
 
       - name: "Install PHP Dependency"
         run: "composer install"
+
+      - name: "Install NPM Dependency"
+        run: "npm install"
 
       - name: "Generate .env file"
         run: |
@@ -77,6 +79,7 @@ jobs:
 
       - name: Stop Docker Containers
         run: docker-compose down -v --rmi local
+        on-error: continue
 
       - name: Build Docker Containers
         run: docker-compose up -d
