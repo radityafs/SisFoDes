@@ -33,6 +33,7 @@ jobs:
         with:
           php-version: "8.1"
           tools: composer:v2
+          args: -s
 
       - name: "Install PHP Dependency"
         run: "composer install"
