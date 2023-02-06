@@ -26,7 +26,7 @@ jobs:
       - name: "Install Composer Dependency"
         uses: "php-actions/composer@v6"
         with:
-          php_version: "8.1"
+          php_version: "8.x"
 
       - name: "Install NPM Dependency"
         uses: "actions/setup-node@v3"
