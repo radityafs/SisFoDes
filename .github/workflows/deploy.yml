@@ -79,7 +79,7 @@ jobs:
 
       - name: Stop Docker Containers
         run: docker-compose down -v --rmi local
-        on-error: continue
+        continue-on-error: true
 
       - name: Build Docker Containers
         run: docker-compose up -d
