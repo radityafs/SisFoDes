@@ -29,10 +29,13 @@ jobs:
           node-version: "16.x"
 
       - name: "Install Composer Dependency"
-        uses: "php-actions/composer@v6"
+        uses: "shivammathur/setup-php@v2"
         with:
-          args: "install"
-          php_version: "8.1"
+          php-version: "8.1"
+          tools: composer:v2
+
+      - name: "Install PHP Dependency"
+        run: "composer install"
 
       - name: "Generate .env file"
         run: |
