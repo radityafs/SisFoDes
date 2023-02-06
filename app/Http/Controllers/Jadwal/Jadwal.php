@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Jadwal;
 use App\Http\Controllers\Controller;
 use App\Models\Jadwal as ModelsJadwal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Jadwal extends Controller
 {
@@ -34,6 +35,8 @@ class Jadwal extends Controller
             'id_filekey' => 'required',
         ]);
 
+        $uuid =  (string) Str::uuid();
+
         $jadwal = ModelsJadwal::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -41,8 +44,16 @@ class Jadwal extends Controller
             'category' => $request->category,
             'type' => $request->type,
             'is_all_user' => $request->is_all_user,
-            'id_filekey' => $request->id_filekey,
+            'id_filekey' => $uuid,
         ]);
+
+        //store multiple file to storage
+        $files = $request->file('files');
+        foreach ($files as $file) {
+            $file->storeAs('public/jadwal/' . $uuid, $file->getClientOriginalName());
+        }
+
+
 
 
         if ($jadwal) {
@@ -58,5 +69,10 @@ class Jadwal extends Controller
                 'data' => ''
             ], 400);
         }
+    }
+
+
+    public function update(Request $request)
+    {
     }
 }

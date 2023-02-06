@@ -12,7 +12,7 @@ services:
             MYSQL_USER: production
             MYSQL_PASSWORD: production123
         volumes:
-            - /root/db_mlale/:/var/lib/mysql
+            - /home/ubuntu/db_mlale/:/var/lib/mysql
         networks:
             - app-network
 
