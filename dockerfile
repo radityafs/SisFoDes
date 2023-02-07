@@ -14,7 +14,7 @@ RUN composer install --no-dev --optimize-autoloader
 
 ## Copy folder from /public/images to /public/build/images
 RUN mkdir -p public/build/images
-RUN cp -r public/images public/build/images
+RUN cp -r public/images public/build/
 
 # Change Storage Permission
 RUN chmod -R 777 /app/storage

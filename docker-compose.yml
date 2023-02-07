@@ -25,6 +25,8 @@ services:
             PMA_PORT: 3306
             PMA_USER: production
             PMA_PASSWORD: production123
+        ports:
+            - 8080:80
         networks:
             - app-network
         depends_on:
@@ -48,7 +50,7 @@ services:
         restart: unless-stopped
         tty: true
         ports:
-            - "80:80"
+            - "8000:80"
         volumes:
             - backend:/app
             - ./Docker/.env:/app/.env
